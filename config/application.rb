@@ -22,7 +22,7 @@ module ContactsBackEnd
 
     config.middleware.insert_before 0, "Rack::Cors" do
       allow do
-        origins 'localhost:4200', 'https://contacts-front-end.herokuapp.com/'
+        origins '*'
         resource '*', :headers => :any, :methods => [:get, :post, :options]
       end
     end
