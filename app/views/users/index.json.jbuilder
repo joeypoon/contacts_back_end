@@ -1,14 +1,9 @@
 json.array! @users do |user|
   json.name user.name
-  json.email user.email
-  json.phone user.phone
   json.company user.company
-  json.city user.city
-  json.state user.state
-  json.facebook user.facebook
-  json.twitter user.twitter
-  json.linkedin user.linkedin
-  json.github user.github
-  json.instagram user.instagram
   json.id user.id
+    json.current_position do
+      json.lat user.current_position.lat
+      json.long user.current_position.long
+   end
 end

@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 
   def index
+    # @current_user = User.find params[:id]
     @users = User.all
   end
 
@@ -39,7 +40,6 @@ class UsersController < ApplicationController
     @user = User.find params[:id]
     @user.destroy
   end
-
 
   private
 

@@ -11,16 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150701183442) do
+ActiveRecord::Schema.define(version: 20150708153745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "current_positions", force: :cascade do |t|
+    t.decimal  "lat"
+    t.decimal  "long"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.string   "password_digest"
-    t.integer  "phone"
+    t.string   "phone"
     t.string   "company"
     t.string   "city"
     t.string   "state"
@@ -31,6 +39,7 @@ ActiveRecord::Schema.define(version: 20150701183442) do
     t.string   "instagram"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.string   "site"
   end
 
 end

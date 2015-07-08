@@ -6,4 +6,5 @@ class User < ActiveRecord::Base
                     format: { with: VALID_EMAIL_REGEX }, uniqueness: true
 
   has_secure_password
+  has_one :current_position
 end
