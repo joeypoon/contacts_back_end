@@ -1,10 +1,8 @@
 class UsersController < ApplicationController
 
   def index
-    # lat = current_user.latitude
-    # long = current_user.longitude
-    lat = User.first.latitude
-    long = User.first.longitude
+    lat = params[:lat]
+    long = params[:long]
     @users = User.near([lat, long], 0.1)
   end
 
@@ -43,6 +41,9 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find params[:id]
     @user.destroy
+  end
+
+  def share
   end
 
   private
