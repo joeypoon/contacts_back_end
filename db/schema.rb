@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150709174312) do
+ActiveRecord::Schema.define(version: 20150709185804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 20150709174312) do
     t.datetime "updated_at",                   null: false
     t.float    "latitude"
     t.float    "longitude"
-    t.integer  "inbound_shares",  default: [],              array: true
-    t.integer  "outbound_shares", default: [],              array: true
+    t.json     "inbound_shares",  default: [],              array: true
+    t.json     "outbound_shares", default: [],              array: true
   end
 
 end

@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
 
-  get 'users/:lat/:long' => 'users#index'
-  # get 'users/:id' => 'users#show' do we even need this?
-  post 'share/:my_id/:to_id' => 'users#share'
+  get 'users/:id/:lat/:long' => 'users#index'
+  get '/:id/profile' => 'users#show'
+  get '/:id/inbound' => 'users#inbound'
+  get '/:id/outbound' => 'users#outbound'
+  post 'share/:my_id/:user_id' => 'users#share'
   post 'login' => 'users#login'
   post 'users' => 'users#create'
 

@@ -22,7 +22,6 @@ class UsersController < ApplicationController
   def login
     @user = User.find_by email: user_params[:email]
     if @user.authenticate(user_params[:password])
-      session[:user_id] = @user.id
       render :show
     else
       render json: { error: "incorrect email/password combination" }, status: 422
@@ -32,7 +31,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find params[:id]
     if @user.update user_params
-      render :show, status: 201
+      render :show, status: 200
     else
       render json: { error: @user.errors }, status: 422
     end
@@ -44,12 +43,23 @@ class UsersController < ApplicationController
   end
 
   def share
-  end
+    current_user = User.find params[:my_id]
+    user = User.find params[:user_id]
 
+    current_user.outbound_shares << { user: { id: user.id, email: user_params[:email] } }
+    user.inbound_shares << { user: { id: current_user.id, email: user_params[:email] } }
+
+    if current_user.save && user.save
+      render json: { success: "You win at life" }, status: 200
+    else
+      render json: { error: "Failed to achieve victory, please try again" }, status: 422
+    end
+  end
+  
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :phone, :company, :city, :state, :facebook, :twitter, :linkedin, :github, :instagram)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :email)
     end
 
 end
