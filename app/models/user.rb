@@ -7,4 +7,6 @@ class User < ActiveRecord::Base
 
   has_secure_password
   has_one :current_position
+  geocoded_by :city
+  after_validation :geocode
 end

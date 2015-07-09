@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
 
   def index
-    @users = User.all
+    # lat = current_user.latitude
+    # long = current_user.longitude
+    lat = User.first.latitude
+    long = User.first.longitude
+    @users = User.near([lat, long], 10)
+    # @users = User.all
   end
 
   def show
@@ -20,6 +25,7 @@ class UsersController < ApplicationController
   def login
     @user = User.find_by email: user_params[:email]
     if @user.authenticate(user_params[:password])
+      session[:user_id] = @user.id
       render :show
     else
       render json: { error: "incorrect email/password combination" }, status: 422
