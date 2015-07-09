@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CurrentPositionTest < ActiveSupport::TestCase
+class ContactInfoTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

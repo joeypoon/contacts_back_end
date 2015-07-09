@@ -5,8 +5,7 @@ class UsersController < ApplicationController
     # long = current_user.longitude
     lat = User.first.latitude
     long = User.first.longitude
-    @users = User.near([lat, long], 10)
-    # @users = User.all
+    @users = User.near([lat, long], 0.1)
   end
 
   def show

@@ -1,4 +1,0 @@
-class CurrentPosition < ActiveRecord::Base
-
-  belongs_to :user
-end

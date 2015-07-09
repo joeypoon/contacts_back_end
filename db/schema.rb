@@ -11,35 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150709032430) do
+ActiveRecord::Schema.define(version: 20150709172432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "current_positions", force: :cascade do |t|
-    t.decimal  "lat"
-    t.decimal  "long"
+  create_table "contact_infos", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "company"
+    t.string   "facebook"
+    t.string   "instagram"
+    t.string   "github"
+    t.string   "linkedin"
+    t.string   "twitter"
+    t.string   "site"
+    t.string   "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "user_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
     t.string   "password_digest"
-    t.string   "phone"
-    t.string   "company"
-    t.string   "city"
-    t.string   "state"
-    t.string   "facebook"
-    t.string   "twitter"
-    t.string   "linkedin"
-    t.string   "github"
-    t.string   "instagram"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.string   "site"
     t.float    "latitude"
     t.float    "longitude"
   end
