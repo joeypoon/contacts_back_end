@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
 
   def index
-    lat = params[:lat]
-    long = params[:long]
-    @users = User.near([lat, long], 0.1)
+    # lat = params[:lat]
+    # long = params[:long]
+    # @users = User.near([lat, long], 0.1)
+    @users = User.all
   end
 
   def show
@@ -55,7 +56,7 @@ class UsersController < ApplicationController
       render json: { error: "Failed to achieve victory, please try again" }, status: 422
     end
   end
-  
+
   private
 
     def user_params
