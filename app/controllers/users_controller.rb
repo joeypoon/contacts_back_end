@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
 
   def index
-    # lat = params[:lat]
-    # long = params[:long]
-    # @users = User.near([lat, long], 0.1)
-    @users = User.all
+     current_user_id = User.find params[:id]
+     lat = params[:lat]
+     lng = params[:lng]
+     @users = User.within(0.01, :origin => [lat, lng]).where.not(id: current_user_id)
+     #.order('distance DESC') Need to add column distance to do this
   end
 
   def show
@@ -75,7 +76,7 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :email)
+      params.require(:user).permit(:name, :password, :password_confirmation, :email)
     end
 
 end
