@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20150710013549) do
     t.string   "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    #TODO add_index :contact_infos, :user_id
   end
 
   create_table "users", force: :cascade do |t|

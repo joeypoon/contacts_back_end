@@ -14,12 +14,9 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new user_params
+    @user.create_contact_info contact_params
     if @user.save
-      contact_info = ContactInfo.new contact_params
-      contact_info.user_id = @user.id
-      if contact_info.save
-        render :show, status: 201
-      end
+      render :show, status: 201
     else
       render json: { error: @user.errors }, status: 422
     end
