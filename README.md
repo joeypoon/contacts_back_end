@@ -1,7 +1,6 @@
 # Contacts API
 
 get 'users/:id/:lat/:long'
-
 Example response:
 
     [
@@ -29,7 +28,22 @@ Example response:
 get '/:id/profile' => 'users#show'
 
 get '/:id/inbound' => 'users#inbound'
+
 get '/:id/outbound' => 'users#outbound'
+
 post 'share/:id/:user_id' => 'users#share'
+
 post 'login' => 'users#login'
+
 post 'users' => 'users#create'
+Example Request
+
+    {
+        "user": {
+            "password": "password",
+            "password_confirmation": "password"
+        },
+        "contact_info": {
+            "email": "eiawaaadaadh@gmail.com"
+        }
+    }

@@ -15,7 +15,11 @@ class UsersController < ApplicationController
   def create
     @user = User.new user_params
     if @user.save
-      render :show, status: 201
+      contact_info = ContactInfo.new contact_params
+      contact_info.user_id = @user.id
+      if contact_info.save
+        render :show, status: 201
+      end
     else
       render json: { error: @user.errors }, status: 422
     end
@@ -77,7 +81,11 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:name, :password, :password_confirmation, :email)
+      params.require(:user).permit(:password, :password_confirmation, :email)
+    end
+
+    def contact_params
+      params.require(:contact_info).permit(:name, :email, :phone, :company, :facebook, :instagram, :github, :linkedin, :twitter, :site)
     end
 
 end
