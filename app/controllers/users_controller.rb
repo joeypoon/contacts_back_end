@@ -22,7 +22,8 @@ class UsersController < ApplicationController
   end
 
   def login
-    @user = User.find_by email: user_params[:email]
+    contact = ContactInfo.find_by email: user_params[:email]
+    @user = User.find (contact.id)
     if @user.authenticate(user_params[:password])
       render :show
     else
