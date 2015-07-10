@@ -1,7 +1,9 @@
 # Contacts API
 
 get 'users/:id/:lat/:long'
-Example response
+
+Example response:
+
     [
       {
         "id": 2,
