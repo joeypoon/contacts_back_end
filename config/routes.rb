@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/:id/inbound' => 'users#inbound'
   get '/:id/outbound' => 'users#outbound'
   post 'share/:id/:user_id' => 'users#share'
+  post 'update' => 'users#update'
   post 'login' => 'users#login'
   post 'users' => 'users#create'
 
