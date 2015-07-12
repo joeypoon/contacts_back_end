@@ -4,7 +4,7 @@ class UsersController < ApplicationController
      current_user_id = User.find params[:id]
      lat = params[:lat]
      lng = params[:lng]
-     @users = User.within(0.01, :origin => [lat, lng]).where.not(id: current_user_id)
+     @users = User.includes(:contact_info).within(0.01, :origin => [lat, lng]).where.not(id: current_user_id)
      #.order('distance DESC') Need to add column distance to do this
   end
 
