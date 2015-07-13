@@ -15,8 +15,6 @@ class UsersController < ApplicationController
   def create
     @user = User.new user_params
     @user.create_contact_info contact_params
-    @user.contact_info.user_id = @user.id 
-
     if @user.save
       render :show, status: 201
     else
