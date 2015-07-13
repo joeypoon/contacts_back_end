@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new user_params
     @user.create_contact_info contact_params
-    if @user.save
+    if @user.contact_info && @user.save
       render :profile, status: 201
     else
       render json: { error: @user.errors }, status: 422
