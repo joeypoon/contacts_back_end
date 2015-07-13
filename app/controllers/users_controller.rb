@@ -14,11 +14,14 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new user_params
-    @user.create_contact_info contact_params
-    if @user.save
+    @contact_info = ContactInfo.new contact_params
+    @contact_info.user_id = @user.id
+    if @contact_info && @contact_info.save
+      if @user && @user.save
       render :show, status: 201
-    else
-      render json: { error: @user.errors }, status: 422
+      else
+        render json: { error: @user.errors }, status: 422
+      end
     end
   end
 
@@ -49,8 +52,14 @@ class UsersController < ApplicationController
     me = current_user
     user = User.find params[:user_id]
 
-    me.outbound_shares << { user: { id: user.id, email: user_params[:email] } }
-    user.inbound_shares << { user: { id: current_user.id, email: user_params[:email] } }
+    me.outbound_shares << { user: { id: user.id, email: user.contact_info.email } }
+    user.inbound_shares << { user: { id: me.id, email: me.contact_info.email } }
+
+    inbound_ids = me.inbound_shares.map { |user| user["user"]["id"] }
+
+    if inbound_ids.include? user.id
+      add_to_contact_list(me, user)
+    end
 
     if me.save && user.save
       render json: { success: "You win at life" }, status: 200
@@ -61,17 +70,27 @@ class UsersController < ApplicationController
 
   def inbound
     inbound_ids = current_user.inbound_shares.map { |share| share["user"]["id"] }
-    @users = User.where(id: inbound_ids)
+    @users = User.includes(:contact_info).where(id: inbound_ids)
     render :index
   end
 
   def outbound
     outbound_ids = current_user.outbound_shares.map { |share| share["user"]["id"] }
-    @users = User.where(id: outbound_ids)
+    @users = User.includes(:contact_info).where(id: outbound_ids)
     render :index
   end
 
   private
+
+    def add_to_contact_list(user1, user2)
+      #check if already shared
+      user1.contact_list << user2.id
+      user1.inbound_shares.delete!(user2.id)
+      user1.outbound_shares.delete!(user2.id)
+      user2.contact_list << user1.id
+      user2.inbound_shares.delete!(user1.id)
+      user2.outbound_shares.delete!(user1.id)
+    end
 
     def current_user
       User.find params[:id]
