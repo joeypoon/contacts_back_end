@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713185149) do
+ActiveRecord::Schema.define(version: 20150713220821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,15 +32,31 @@ ActiveRecord::Schema.define(version: 20150713185149) do
 
   add_index "contact_infos", ["user_id"], name: "index_contact_infos_on_user_id", using: :btree
 
+  create_table "contact_lists", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "list",       default: [],              array: true
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "contact_lists", ["user_id"], name: "index_contact_lists_on_user_id", using: :btree
+
+  create_table "shares", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "sent_to"
+    t.json     "info"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "shares", ["user_id"], name: "index_shares_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "password_digest"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.float    "lat"
     t.float    "lng"
-    t.json     "inbound_shares",  default: [],              array: true
-    t.json     "outbound_shares", default: [],              array: true
-    t.integer  "contact_list",    default: [],              array: true
     t.string   "name"
     t.string   "email"
   end
