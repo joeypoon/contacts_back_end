@@ -1,3 +1,3 @@
-json.(@user, :id)
+json.(@user, :id, :name)
 
 #photo
