@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
   def login
     contact = ContactInfo.find_by email: user_params[:email]
-    @user = User.find (contact.id)
+    @user = User.find (contact.id) if contact
     if @user && @user.authenticate(user_params[:password])
       render :login, status: 200
     else
