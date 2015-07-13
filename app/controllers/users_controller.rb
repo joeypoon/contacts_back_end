@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   def login
     contact = ContactInfo.find_by email: user_params[:email]
     @user = User.find (contact.id)
-    if @user.authenticate(user_params[:password])
+    if @user && @user.authenticate(user_params[:password])
       render :login, status: 200
     else
       render json: { error: "incorrect email/password combination" }, status: 422
