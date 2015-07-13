@@ -14,6 +14,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new user_params
+    #TODO create associations
     if @user && @user.save
       render :profile, status: 201
     else
@@ -47,44 +48,39 @@ class UsersController < ApplicationController
     me = current_user
     user = User.find params[:user_id]
 
-    me.outbound_shares << { user: { id: user.id, email: user.contact_info.email } }
-    user.inbound_shares << { user: { id: me.id, email: me.contact_info.email } }
+    share = Share.new user_id: me.id, sent_to: user.id, info: {}
 
-    inbound_ids = me.inbound_shares.map { |user| user["user"]["id"] }
-
-    if inbound_ids.include? user.id
-      add_to_contact_list(me, user)
-    end
-
-    if me.save && user.save
-      render json: { success: "You win at life" }, status: 200
+    if Share.where(sent_to: me.id).find_by(user_id: user.id)
+      me.contact_list.list << user.id
+      user.contact_list.list << me.id
+      save_share(share) if me.contact_list.save && user.contact_list.save
     else
-      render json: { error: "Failed to achieve victory, please try again" }, status: 422
+      save_share(share)
     end
   end
 
   def inbound
-    inbound_ids = current_user.inbound_shares.map { |share| share["user"]["id"] }
+    inbound_shares = Share.where(sent_to: current_user.id)
+    inbound_ids = inbound_shares.map { |share| share.user_id }
     @users = User.includes(:contact_info).where(id: inbound_ids)
     render :index
   end
 
   def outbound
-    outbound_ids = current_user.outbound_shares.map { |share| share["user"]["id"] }
+    outbound_shares = Share.where(user_id: current_user.id)
+    outbound_ids = outbound_shares.map { |share| share.sent_to }
     @users = User.includes(:contact_info).where(id: outbound_ids)
     render :index
   end
 
   private
 
-    def add_to_contact_list(user1, user2)
-      #check if already shared
-      user1.contact_list << user2.id
-      user1.inbound_shares.delete!(user2.id)
-      user1.outbound_shares.delete!(user2.id)
-      user2.contact_list << user1.id
-      user2.inbound_shares.delete!(user1.id)
-      user2.outbound_shares.delete!(user1.id)
+    def save_share(share)
+      if share.save
+        render json: { success: "Win" }, status: 200
+      else
+        render json: { error: "You have failed to achieve victory" }, status: 422
+      end
     end
 
     def current_user
