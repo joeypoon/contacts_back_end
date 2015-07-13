@@ -1,0 +1,3 @@
+json.(@user, :id)
+
+#photo

@@ -11,14 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713163846) do
+ActiveRecord::Schema.define(version: 20150713185149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "contact_infos", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
     t.string   "phone"
     t.string   "company"
     t.string   "facebook"
@@ -43,6 +41,8 @@ ActiveRecord::Schema.define(version: 20150713163846) do
     t.json     "inbound_shares",  default: [],              array: true
     t.json     "outbound_shares", default: [],              array: true
     t.integer  "contact_list",    default: [],              array: true
+    t.string   "name"
+    t.string   "email"
   end
 
 end

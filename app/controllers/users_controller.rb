@@ -14,21 +14,16 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new user_params
-    @contact_info = ContactInfo.new contact_params
-    @contact_info.user_id = @user.id
-    if @contact_info && @contact_info.save
-      if @user && @user.save
-      render :show, status: 201
-      else
-        render json: { error: @user.errors }, status: 422
-      end
+    if @user && @user.save
+      render :profile, status: 201
+    else
+      render json: { error: @user.errors }, status: 422
     end
   end
 
   def login
-    contact = ContactInfo.find_by email: user_params[:email]
-    @user = User.find (contact.id)
-    if @user.authenticate(user_params[:password])
+    @user = User.find_by email: user_params[:email]
+    if @user && @user.authenticate(user_params[:password])
       render :show
     else
       render json: { error: "incorrect email/password combination" }, status: 422
@@ -36,7 +31,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find params[:id]
+    @user = current_user
     if @user.update user_params
       render :show, status: 200
     else
@@ -97,11 +92,11 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:password, :password_confirmation, :email)
+      params.require(:user).permit(:password, :password_confirmation, :email, :name)
     end
 
     def contact_params
-      params.require(:contact_info).permit(:name, :email, :phone, :company, :facebook, :instagram, :github, :linkedin, :twitter, :site)
+      params.require(:contact_info).permit(:phone, :company, :facebook, :instagram, :github, :linkedin, :twitter, :site)
     end
 
 end
