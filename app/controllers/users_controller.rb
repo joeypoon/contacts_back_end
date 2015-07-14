@@ -59,6 +59,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy_inbound
+    share = Share.where(sent_to: params[:id]).find_by(user_id: params[:user_id])
+    share.destroy
+  end
+
+  def destroy_outbound
+    share = Share.where(sent_to: params[:user_id]).find_by(user_id: params[:id])
+    share.destroy
+  end
+
+  def destroy_contact
+    current_user.contact_list.list.delete(params[:user_id])
+  end
+
   def inbound
     inbound_shares = Share.where(sent_to: current_user.id)
     inbound_ids = inbound_shares.map { |share| share.user_id }

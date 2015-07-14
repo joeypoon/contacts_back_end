@@ -2,8 +2,6 @@ source 'https://rubygems.org'
 
 ruby '2.2.2'
 
-gem 'dotenv'
-gem 'faker'
 gem 'rails', '4.2.3'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
@@ -18,7 +16,8 @@ gem 'geokit-rails'
 gem 'carrierwave'
 gem 'carrierwave-aws'
 gem "mini_magick"
-
+gem 'dotenv-rails'
+gem 'faker'
 
 group :development, :test do
   gem 'byebug'

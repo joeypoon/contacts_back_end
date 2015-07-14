@@ -1,8 +1,8 @@
 # Contacts API
 
-get 'users/:lat/:long/:id'<br>
-get '/:id/inbound' => 'users#inbound'<br>
-get '/:id/outbound' => 'users#outbound'<br>
+get 'users/:lat/:lng/:id'<br>
+get 'inbound/:id'<br>
+get 'outbound/:id' => 'users#outbound'<br>
 Example response:
 
     [
@@ -27,7 +27,8 @@ Example response:
       }
     ]
 
-get '/:id/profile' => 'users#show'
+get 'profile/:id'
+get 'contacts/:id' => 'users#contact_list'
 
 post 'update' => 'users#update'
 
@@ -67,3 +68,7 @@ Example Request:
         "password_confirmation": "password"
       }
     }
+
+delete 'inbound/:id/:user_id' => 'users#destroy_inbound'
+delete 'outbound/:id/:user_id' => 'users#destroy_outbound'
+delete 'contacts/:user_id' => 'users#destroy_contact'
