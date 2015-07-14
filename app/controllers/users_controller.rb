@@ -73,6 +73,12 @@ class UsersController < ApplicationController
     render :index
   end
 
+  def contact_list
+    contact_ids = current_user.contact_list.list
+    @users = User.includes(:contact_info).where(id: contact_ids)
+    render :index
+  end
+
   private
 
     def save_share(share)
