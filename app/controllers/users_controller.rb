@@ -76,7 +76,7 @@ class UsersController < ApplicationController
   def contact_list
     contact_ids = current_user.contact_list.list
     @users = User.includes(:contact_info).where(id: contact_ids)
-    render :index
+    render :contacts
   end
 
   private

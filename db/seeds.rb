@@ -3,10 +3,6 @@
   lat = [-58.000001, -58.000002, -58.000003, -58.000004, 100.0000000 ].sample
   lng = [-68.000001, -68.000002, -68.000003, -68.000004, 100.0000000].sample
 
-<<<<<<< HEAD
-  user = User.create! password: 'password', password_confirmation: 'password', email: Faker::Internet.email, name: Faker::Name.name, lat: lat, lng: lng
-  ContactInfo.create! user_id: user.id
-=======
   user = User.create! name: Faker::Name.name,
                       email: Faker::Internet.email,
                       password: 'password',
@@ -25,6 +21,5 @@
                       linkedin: Faker::Internet.url("linkedin.com/#{user.name.parameterize}")
 
   ContactList.create! user_id: user.id
->>>>>>> fix-data-models
 
 end

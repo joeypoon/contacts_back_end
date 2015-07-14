@@ -36,7 +36,6 @@ Example Request:
 
     {
       "contact_info": {
-        "email": true,
         "phone": false,
         "facebook": false,
         "instagram": false,
