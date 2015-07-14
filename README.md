@@ -8,10 +8,10 @@ Example response:
     [
       {
         "id": 2,
+        "name": "Maiya Yundt",
+        "email": "branson.homenick@larson.info",
         "contact_info": {
           "id": 2,
-          "name": "Maiya Yundt",
-          "email": "branson.homenick@larson.info",
           "phone": null,
           "company": null,
           "facebook": null,
