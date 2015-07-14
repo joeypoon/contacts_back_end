@@ -35,14 +35,16 @@ post 'share/:id/:user_id' => 'users#share'<br>
 Example Request:
 
     {
-      "email": true,
-      "phone": false,
-      "facebook": false,
-      "instagram": false,
-      "github": true,
-      "linkedin": true,
-      "twitter": true,
-      "site": true,
+      "contact_info": {
+        "email": true,
+        "phone": false,
+        "facebook": false,
+        "instagram": false,
+        "github": true,
+        "linkedin": true,
+        "twitter": true,
+        "site": true,
+      }
     }
 
 post 'login' => 'users#login'<br>
