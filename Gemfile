@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.2.2'
 
-gem 'dotenv'
+gem 'dotenv-rails'
 gem 'faker'
 gem 'rails', '4.2.3'
 gem 'pg'
