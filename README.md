@@ -1,6 +1,9 @@
 # Contacts API
 
-get 'users/:id/:lat/:long'
+get 'users/:lat/:long/:id'
+get '/:id/inbound' => 'users#inbound'
+get '/:id/outbound' => 'users#outbound'
+
 Example response:
 
     [
@@ -27,23 +30,47 @@ Example response:
 
 get '/:id/profile' => 'users#show'
 
-get '/:id/inbound' => 'users#inbound'
-
-get '/:id/outbound' => 'users#outbound'
+post 'update' => 'users#update'
 
 post 'share/:id/:user_id' => 'users#share'
 
+Example Request:
+
+  {
+    "contact_info": {
+      "email": "example@gmail.com",
+      "phone": "123123123",
+      "facebook": "facebook.com/username",
+      "instagram": "instagram.com/username",
+      "github": "github.com/username",
+      "linkedin": "linkedin.com/in/username",
+      "twitter": "twitter.com/username",
+      "site": "username.com",
+    }
+  }
+
 post 'login' => 'users#login'
 
+Example Request:
+
+  {
+    "user": {
+      "email": "example@gmail.com",
+      "password": "password"
+    }
+  }
+
 post 'users' => 'users#create'
+
 Example Request
 
-    {
-        "user": {
-            "password": "password",
-            "password_confirmation": "password"
-        },
-        "contact_info": {
-            "email": "eiawaaadaadh@gmail.com"
-        }
+Example Request:
+
+  {
+    "user": {
+      "name": "Joey F. Poon",
+      "email": "example@gmail.com",
+      "password": "password",
+      "password_confirmation": "password"
     }
+  }

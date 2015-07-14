@@ -14,7 +14,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new user_params
-    #TODO create associations
+    @user.create_contact_list
     if @user && @user.save
       render :profile, status: 201
     else
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
     me = current_user
     user = User.find params[:user_id]
 
-    share = Share.new user_id: me.id, sent_to: user.id, info: {}
+    share = Share.new user_id: me.id, sent_to: user.id, info: {} #contact_params
 
     if Share.where(sent_to: me.id).find_by(user_id: user.id)
       me.contact_list.list << user.id
@@ -92,7 +92,7 @@ class UsersController < ApplicationController
     end
 
     def contact_params
-      params.require(:contact_info).permit(:phone, :company, :facebook, :instagram, :github, :linkedin, :twitter, :site)
+      params.require(:contact_info).permit(:phone, :company, :facebook, :instagram, :github, :linkedin, :twitter, :site, :email)
     end
 
 end
