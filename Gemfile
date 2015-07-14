@@ -15,6 +15,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bcrypt', '~> 3.1.7'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'geokit-rails'
+gem 'carrierwave'
+gem 'carrierwave-aws'
+gem "mini_magick"
+
 
 group :development, :test do
   gem 'byebug'
