@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   get 'users/:lat/:lng/:id' => 'users#index', :constraints => { :lng => /.*/, :lat => /.*/ }
-  get 'profile/:id' => 'users#show'
+  get 'profile/:id' => 'users#edit'
   get 'inbound/:id' => 'users#inbound'
   get 'outbound/:id' => 'users#outbound'
   get 'contacts/:id' => 'users#contact_list'
