@@ -92,6 +92,10 @@ class UsersController < ApplicationController
     render :contacts
   end
 
+  def show
+    @user = User.find_by id: params[:user_id]
+  end
+
   private
 
     def save_share(share)
