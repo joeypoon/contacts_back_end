@@ -27,10 +27,20 @@ Example response:
       }
     ]
 
-get 'profile/:id'
-get 'contacts/:id' => 'users#contact_list'
+get 'profile/:id'<br>
+get 'contacts/:id'<br>
+get 'contacts/profile/:id/:user_id'<br>
 
-post 'update' => 'users#update'
+Example Request:
+
+    {
+      "share": {
+      "email": false,
+      "phone": true
+      }
+    }
+
+post 'update' => 'users#update'<br>
 
 post 'share/:id/:user_id' => 'users#share'<br>
 Example Request:
@@ -69,6 +79,6 @@ Example Request:
       }
     }
 
-delete 'inbound/:id/:user_id' => 'users#destroy_inbound'
-delete 'outbound/:id/:user_id' => 'users#destroy_outbound'
-delete 'contacts/:user_id' => 'users#destroy_contact'
+delete 'inbound/:id/:user_id' => 'users#destroy_inbound'<br>
+delete 'outbound/:id/:user_id' => 'users#destroy_outbound'<br>
+delete 'contacts/:user_id' => 'users#destroy_contact'<br>
