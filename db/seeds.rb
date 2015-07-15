@@ -5,20 +5,18 @@
 
   user = User.create! name: Faker::Name.name,
                       email: Faker::Internet.email,
+                      phone: Faker::PhoneNumber.cell_phone,
+                      company: Faker::Company.name,
+                      site: "http://#{Faker::Name.name.parameterize}.com",
+                      twitter: Faker::Internet.url("twitter.com/#{Faker::Name.name.parameterize}"),
+                      github: Faker::Internet.url("github.com/#{Faker::Name.name.parameterize}"),
+                      facebook: Faker::Internet.url("facebook.com/#{Faker::Name.name.parameterize}"),
+                      instagram: Faker::Internet.url("instagram.com/#{Faker::Name.name.parameterize}"),
+                      linkedin: Faker::Internet.url("linkedin.com/#{Faker::Name.name.parameterize}"),
                       password: 'password',
                       password_confirmation: 'password',
                       lat: lat,
                       lng: lng
-
-  ContactInfo.create! user_id: user.id,
-                      phone: Faker::PhoneNumber.cell_phone,
-                      company: Faker::Company.name,
-                      site: "http://#{user.name.parameterize}.com",
-                      twitter: Faker::Internet.url("twitter.com/#{user.name.parameterize}"),
-                      github: Faker::Internet.url("github.com/#{user.name.parameterize}"),
-                      facebook: Faker::Internet.url("facebook.com/#{user.name.parameterize}"),
-                      instagram: Faker::Internet.url("instagram.com/#{user.name.parameterize}"),
-                      linkedin: Faker::Internet.url("linkedin.com/#{user.name.parameterize}")
 
   ContactList.create! user_id: user.id
 
