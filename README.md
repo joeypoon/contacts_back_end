@@ -3,6 +3,7 @@
 get 'users/:lat/:lng/:id'<br>
 get 'inbound/:id'<br>
 get 'outbound/:id' => 'users#outbound'<br>
+get 'contacts/:id'<br>
 Example response:
 
     [
@@ -28,25 +29,51 @@ Example response:
     ]
 
 get 'profile/:id'<br>
-get 'contacts/:id'<br>
-get 'contacts/profile/:id/:user_id'<br>
-
-Example Request:
+Example Response:
 
     {
-      "share": {
-      "email": false,
-      "phone": true
+      "id": 1,
+      "name": "Micaela Dare V",
+      "email": "jody@christiansen.org",
+      "phone": "(182) 887-4266",
+      "company": "Hessel LLC",
+      "facebook": "http://facebook.com/demario-wilkinson-v/dakota_gusikowski",
+      "instagram": "http://instagram.com/thea-davis-iv/elmira",
+      "github": "http://github.com/maryam-goldner/kaandra.terry",
+      "linkedin": "http://linkedin.com/dario-daniel/chanel",
+      "twitter": "http://twitter.com/zola-schimmel/trisha.beier",
+      "site": "http://willow-huel.com",
+      "avatar": "https://s3.amazonaws.com/contacts-bee/default.png"
+    }
+
+get 'contacts/profile/:id/:user_id'<br>
+Example Response:
+
+    {
+      "user": {
+        "id": 1,
+        "avatar": "https://s3.amazonaws.com/contacts-bee/default.png",
+        "name": "Micaela Dare V",
+        "company": "Hessel LLC",
+        "email": "jody@christiansen.org"
       }
     }
 
 post 'update' => 'users#update'<br>
+Example Request:
+
+    {
+      "user": {
+        "name": "blah",
+        "email": "blah@gmail.com"
+      }
+    }
 
 post 'share/:id/:user_id' => 'users#share'<br>
 Example Request:
 
     {
-      "contact_info": {
+      "share": {
         "phone": false,
         "facebook": false,
         "instagram": false,
