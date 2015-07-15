@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'inbound/:id' => 'users#inbound'
   get 'outbound/:id' => 'users#outbound'
   get 'contacts/:id' => 'users#contact_list'
-  get 'contacts/profile/:user_id' => 'users#show'
+  get 'contacts/profile/:id/:user_id' => 'users#show'
   post 'share/:id/:user_id' => 'users#share'
   post 'update' => 'users#update'
   post 'login' => 'users#login'

@@ -48,7 +48,7 @@ class UsersController < ApplicationController
   def share
     me = current_user
     user = User.find params[:user_id]
-    share = Share.new user_id: me.id, sent_to: user.id, info: {}
+    share = Share.new user_id: me.id, sent_to: user.id, info: share_params
     if Share.where(sent_to: me.id).find_by(user_id: user.id)
       me.contact_list.list << user.id
       user.contact_list.list << me.id
@@ -94,6 +94,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by id: params[:user_id]
+    me = current_user
+    @share = Share.where(sent_to: me.id).find_by(user_id: @user.id)
   end
 
   private
@@ -112,5 +114,9 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:password, :password_confirmation, :email, :name, :avatar, :phone, :company, :facebook, :instagram, :github, :linkedin, :twitter, :site)
+    end
+
+    def share_params
+      params.require(:share).permit(:email, :phone, :facebook, :instagram, :github, :linkedin, :twitter, :site)
     end
 end
