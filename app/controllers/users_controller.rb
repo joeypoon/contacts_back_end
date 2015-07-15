@@ -4,7 +4,7 @@ class UsersController < ApplicationController
      current_user_id = User.find params[:id]
      lat = params[:lat]
      lng = params[:lng]
-     @users = User.includes(:contact_info).within(0.01, :origin => [lat, lng]).where.not(id: current_user_id)
+     @users = User.within(0.01, :origin => [lat, lng]).where.not(id: current_user_id)
      #.order('distance DESC') Need to add column distance to do this
   end
 
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    if (@user.update user_params) && (@user.contact_info.update contact_params)
+    if @user.update user_params
       render :edit, status: 200
     else
       render json: { error: @user.errors }, status: 422
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
   def share
     me = current_user
     user = User.find params[:user_id]
-    share = Share.new user_id: me.id, sent_to: user.id, info: {} #contact_params
+    share = Share.new user_id: me.id, sent_to: user.id, info: {}
     if Share.where(sent_to: me.id).find_by(user_id: user.id)
       me.contact_list.list << user.id
       user.contact_list.list << me.id
@@ -75,20 +75,20 @@ class UsersController < ApplicationController
   def inbound
     inbound_shares = Share.where(sent_to: current_user.id)
     inbound_ids = inbound_shares.map { |share| share.user_id }
-    @users = User.includes(:contact_info).where(id: inbound_ids)
+    @users = User.where(id: inbound_ids)
     render :index
   end
 
   def outbound
     outbound_shares = Share.where(user_id: current_user.id)
     outbound_ids = outbound_shares.map { |share| share.sent_to }
-    @users = User.includes(:contact_info).where(id: outbound_ids)
+    @users = User.where(id: outbound_ids)
     render :index
   end
 
   def contact_list
     contact_ids = current_user.contact_list.list
-    @users = User.includes(:contact_info).where(id: contact_ids)
+    @users = User.where(id: contact_ids)
     render :contacts
   end
 
@@ -107,11 +107,6 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:password, :password_confirmation, :email, :name, :avatar)
+      params.require(:user).permit(:password, :password_confirmation, :email, :name, :avatar, :phone, :company, :facebook, :instagram, :github, :linkedin, :twitter, :site)
     end
-
-    def contact_params
-      params.require(:contact_info).permit(:phone, :company, :facebook, :instagram, :github, :linkedin, :twitter, :site, :email)
-    end
-
 end

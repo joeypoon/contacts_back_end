@@ -1,4 +1,1 @@
-json.(@user, :id, :name, :email, :contact_info)
-json.avatar @user.avatar.profile.url
-
-#photo
+json.(@user, :id, :name, :email, :phone, :company, :facebook, :instagram, :github, :linkedin, :twitter, :site)
