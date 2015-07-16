@@ -49,9 +49,12 @@ class UsersController < ApplicationController
     me = current_user
     user = User.find params[:user_id]
     share = Share.new user_id: me.id, sent_to: user.id, info: share_params
-    if Share.where(sent_to: me.id).find_by(user_id: user.id)
+    inbound_share = Share.where(sent_to: me.id).find_by(user_id: user.id)
+    if inbound_share
       me.contact_list.list << user.id
       user.contact_list.list << me.id
+      share.shared = true
+      inbound_share.shared = true
       save_share(share) if me.contact_list.save && user.contact_list.save
     else
       save_share(share)
@@ -73,14 +76,14 @@ class UsersController < ApplicationController
   end
 
   def inbound
-    inbound_shares = Share.where(sent_to: current_user.id)
+    inbound_shares = Share.not_shared.sent_to_current_user
     inbound_ids = inbound_shares.map { |share| share.user_id }
     @users = User.where(id: inbound_ids)
     render :index
   end
 
   def outbound
-    outbound_shares = Share.where(user_id: current_user.id)
+    outbound_shares = Share.not_shared.from_current_user
     outbound_ids = outbound_shares.map { |share| share.sent_to }
     @users = User.where(id: outbound_ids)
     render :index
@@ -106,10 +109,6 @@ class UsersController < ApplicationController
       else
         render json: { error: "You have failed to achieve victory" }, status: 422
       end
-    end
-
-    def current_user
-      User.find params[:id]
     end
 
     def user_params

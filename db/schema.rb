@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150715161255) do
+ActiveRecord::Schema.define(version: 20150716171027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,8 +29,9 @@ ActiveRecord::Schema.define(version: 20150715161255) do
     t.integer  "user_id"
     t.integer  "sent_to"
     t.json     "info"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "shared",     default: false
   end
 
   add_index "shares", ["user_id"], name: "index_shares_on_user_id", using: :btree
