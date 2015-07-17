@@ -76,14 +76,14 @@ class UsersController < ApplicationController
   end
 
   def inbound
-    inbound_shares = Share.not_shared.sent_to_current_user
+    inbound_shares = Share.where(sent_to: current_user.id).not_shared
     inbound_ids = inbound_shares.map { |share| share.user_id }
     @users = User.where(id: inbound_ids)
     render :index
   end
 
   def outbound
-    outbound_shares = Share.not_shared.from_current_user
+    outbound_shares = Share.where(user_id: current_user.id).not_shared
     outbound_ids = outbound_shares.map { |share| share.sent_to }
     @users = User.where(id: outbound_ids)
     render :index
