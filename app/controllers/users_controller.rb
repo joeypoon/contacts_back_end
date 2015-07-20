@@ -1,10 +1,14 @@
 class UsersController < ApplicationController
 
   def index
-     current_user_id = User.find params[:id]
+     current_user = User.find params[:id]
      lat = params[:lat]
      lng = params[:lng]
-     @users = User.within(0.01, :origin => [lat, lng]).where.not(id: current_user_id)
+     current_user.lat = lat
+     current_user.lng = lng
+     if current_user.save
+       @users = User.within(0.01, :origin => [lat, lng]).where.not(id: current_user.id)
+     end
      #.order('distance DESC') Need to add column distance to do this
   end
 
