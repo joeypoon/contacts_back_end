@@ -7,6 +7,7 @@ class UsersController < ApplicationController
      current_user.lat = lat
      current_user.lng = lng
      contact_ids = current_user.contact_list.list
+     outbound_ids = current_user.shares
      all_ids = contact_ids << current_user.id
      if current_user.save
        @users = User.within(0.01, :origin => [lat, lng]).where.not(id: all_ids)
@@ -27,7 +28,7 @@ class UsersController < ApplicationController
   def login
     @user = User.find_by email: user_params[:email]
     if @user && @user.authenticate(user_params[:password])
-      render :edit, status: 201
+      render :edit, status: 200
     else
       render json: { error: "incorrect email/password combination" }, status: 422
     end
@@ -61,7 +62,8 @@ class UsersController < ApplicationController
       user.contact_list.list << me.id
       share.shared = true
       inbound_share.shared = true
-      save_share(share) if me.contact_list.save && user.contact_list.save
+      save_shares(share, inbound_share) if me.contact_list.save && user.contact_list.save
+      binding.pry
     else
       save_share(share)
     end
@@ -82,14 +84,14 @@ class UsersController < ApplicationController
   end
 
   def inbound
-    inbound_shares = Share.where(sent_to: current_user.id).not_shared
+    inbound_shares = Share.where(sent_to: current_user.id).not_shared #showing all
     inbound_ids = inbound_shares.map { |share| share.user_id }
     @users = User.where(id: inbound_ids)
     render :index
   end
 
   def outbound
-    outbound_shares = Share.where(user_id: current_user.id).not_shared
+    outbound_shares = Share.where(user_id: current_user.id).not_shared #showing all
     outbound_ids = outbound_shares.map { |share| share.sent_to }
     @users = User.where(id: outbound_ids)
     render :index
@@ -108,6 +110,14 @@ class UsersController < ApplicationController
   end
 
   private
+
+    def save_shares(s1, s2)
+      if s1.save && s2.save
+        render json: { success: "Win" }, status: 200
+      else
+        render json: { error: "You have failed to achieve victory" }, status: 422
+      end
+    end
 
     def save_share(share)
       if share.save
