@@ -63,7 +63,6 @@ class UsersController < ApplicationController
       share.shared = true
       inbound_share.shared = true
       save_shares(share, inbound_share) if me.contact_list.save && user.contact_list.save
-      binding.pry
     else
       save_share(share)
     end
