@@ -6,9 +6,8 @@ class UsersController < ApplicationController
      lng = params[:lng]
      current_user.lat = lat
      current_user.lng = lng
-     contact_ids = current_user.contact_list.list
-     outbound_ids = current_user.shares
-     all_ids = contact_ids << current_user.id
+     outbound_ids = current_user.shares.map { |share| share.sent_to }
+     all_ids = outbound_ids << current_user.id
      if current_user.save
        @users = User.within(0.01, :origin => [lat, lng]).where.not(id: all_ids)
      end
