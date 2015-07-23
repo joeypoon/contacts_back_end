@@ -113,14 +113,11 @@ class UsersController < ApplicationController
 
   def destroy_contact
     current_user.contact_list.list.delete(params[:user_id])
-    list = current_user.contact_list
-    if list.save
-      contact_ids = current_user.contact_list.list
-      @users = User.where(id: contact_ids)
-      render :contacts, status: 200
-    else
-      render json: { error: "You have failed to achieve victory" }, status: 422
-    end
+    current_user.contact_list.save
+    
+    contact_ids = current_user.contact_list.list
+    @users = User.where(id: contact_ids)
+    render :contacts, status: 200
   end
 
   private
