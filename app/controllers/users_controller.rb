@@ -112,7 +112,6 @@ class UsersController < ApplicationController
   end
 
   def destroy_contact
-    current_user = User.find(params[:id])
     user_id = params[:user_id].to_i
     current_user.contact_list.list.delete(user_id)
     if current_user.contact_list.save
