@@ -113,11 +113,9 @@ class UsersController < ApplicationController
 
   def destroy_contact
     current_user = User.find(params[:id])
-    user_id = params[:delete]
-    current_user.contact_list.list.delete(user_id)
+    list = current_user.contact_list.list
+    list.delete(params[:delete])
     current_user.contact_list.save
-    contact_ids = current_user.contact_list.list
-    @users = User.where(id: contact_ids)
     render :contacts, status: 200
   end
 
