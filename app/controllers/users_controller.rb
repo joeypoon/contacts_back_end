@@ -47,6 +47,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+    @user = User.find_by id: params[:user_id]
+    me = current_user
+    @share = Share.where(sent_to: me.id).find_by(user_id: @user.id)
+  end
+
   def destroy
     current_user.destroy
   end
@@ -65,23 +71,6 @@ class UsersController < ApplicationController
     else
       save_share(share)
     end
-  end
-
-  def destroy_inbound
-    share = Share.where(sent_to: params[:id]).find_by(user_id: params[:user_id])
-    share.destroy
-    render :index
-  end
-
-  def destroy_outbound
-    share = Share.where(sent_to: params[:user_id]).find_by(user_id: params[:id])
-    share.destroy
-    render :index
-  end
-
-  def destroy_contact
-    current_user.contact_list.list.delete(params[:user_id])
-    render :contacts
   end
 
   def inbound
@@ -104,10 +93,21 @@ class UsersController < ApplicationController
     render :contacts
   end
 
-  def show
-    @user = User.find_by id: params[:user_id]
-    me = current_user
-    @share = Share.where(sent_to: me.id).find_by(user_id: @user.id)
+  def destroy_inbound
+    share = Share.where(sent_to: params[:id]).find_by(user_id: params[:user_id])
+    share.destroy
+    render :index
+  end
+
+  def destroy_outbound
+    share = Share.where(sent_to: params[:user_id]).find_by(user_id: params[:id])
+    share.destroy
+    render :index
+  end
+
+  def destroy_contact
+    current_user.contact_list.list.delete(params[:user_id])
+    render :contacts
   end
 
   private
