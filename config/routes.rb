@@ -13,6 +13,5 @@ Rails.application.routes.draw do
   delete 'inbound/:id/:user_id' => 'users#destroy_inbound'
   delete 'outbound/:id/:user_id' => 'users#destroy_outbound'
   delete 'contacts/:id/:user_id' => 'users#destroy_contact'
-ls
 
 end
