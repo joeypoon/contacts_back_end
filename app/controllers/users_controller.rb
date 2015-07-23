@@ -115,6 +115,7 @@ class UsersController < ApplicationController
     current_user = User.find(params[:id])
     user_id = params[:user_id]
     current_user.contact_list.list.delete(user_id)
+    binding.pry
     current_user.contact_list.save
     contact_ids = current_user.contact_list.list
     @users = User.where(id: contact_ids)
