@@ -12,6 +12,4 @@ json.user do
   json.twitter @user.twitter if @share.info["twitter"]
   json.skype @user.skype if @share.info["skype"]
   json.site @user.site if @share.info["site"]
-  json.skype @user.skype if @share.info["skype"]
-
 end
