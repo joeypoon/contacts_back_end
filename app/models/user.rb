@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
+  has_one :contact_info, dependent: :destroy
   has_one :contact_list, dependent: :destroy
   has_many :shares, dependent: :destroy
 

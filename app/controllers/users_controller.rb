@@ -142,10 +142,10 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:password, :password_confirmation, :email, :name, :avatar, :phone, :company, :facebook, :instagram, :github, :linkedin, :twitter, :site)
+      params.require(:user).permit(:password, :password_confirmation, :email, :name, :avatar, :skype, :phone, :company, :facebook, :instagram, :github, :linkedin, :twitter, :site)
     end
 
     def share_params
-      params.require(:share).permit(:email, :phone, :facebook, :instagram, :github, :linkedin, :twitter, :site)
+      params.require(:share).permit(:email, :phone, :facebook, :instagram, :github, :linkedin, :skype, :twitter, :site)
     end
 end
