@@ -10,6 +10,7 @@ json.user do
   json.github @user.github if @share.info["github"]
   json.linkedin @user.linkedin if @share.info["linkedin"]
   json.twitter @user.twitter if @share.info["twitter"]
+  json.skype @user.skype if @share.info["skype"]
   json.site @user.site if @share.info["site"]
   json.skype @user.skype if @share.info["skype"]
 
