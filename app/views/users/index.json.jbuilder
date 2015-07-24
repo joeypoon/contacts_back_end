@@ -10,5 +10,6 @@ json.array! @users do |user|
   json.linkedin user.linkedin
   json.twitter user.twitter
   json.site user.site
+  json.skype user.skype
   json.avatar user.avatar.url
 end
