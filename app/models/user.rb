@@ -4,8 +4,6 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
- # remove contact_info
-  has_one :contact_info, dependent: :destroy
   has_one :contact_list, dependent: :destroy
   has_many :shares, dependent: :destroy
 
